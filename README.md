@@ -2245,7 +2245,15 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) 
 SelectWeapona:Add(v.Name)
 end
 end)
-Main:AddButton("Team Hải Quân",true,function()
+Main:AddToggle("Team Hải Quân",true,function(value)
+_G.AutoHaiQuan = value
+StopTween(_G.AutoHaiQuan)
+end)
+
+spawn(function()
+pcall(function()
+while wait() do
+if _G.AutoHaiQuan then
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
 end)
 
