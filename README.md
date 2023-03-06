@@ -2093,9 +2093,19 @@ end)
 local RenUi = library:AddWindow("THANH TRẦN 2005",Enum.KeyCode.RightControl)
 --------------------------------------------------------------------
 local Main = RenUi:AddTab("Menu Farm","6026568198")
+local Combat = RenUi:AddTab("Player","7251993295")
+local Stats = RenUi:AddTab("Stats","7040410130")
+local Teleport = RenUi:AddTab("Dịch Chuyển","6035190846")
+local Dungeon = RenUi:AddTab("Raid","7044284832")
+local DevilFruit = RenUi:AddTab("Trái Ác Quỷ","7044233235")
+local Shop = RenUi:AddTab("Shop","6031265976")
+local Misc = RenUi:AddTab("Tính năng khác","6034509993")
+local Vip = RenUi:AddTab("Chức Năng Vip","6026568198")
 --------------------------------------------------------------------
 Main:AddSeperator("Hãy Follow Kênh TikTok:Thanhtran2005isme để xem các Video về Hack Roblox mới:)")
 Main:AddSeperator("Settings Farm")
+
+Main:AddSeperator("FastAttack and Settings")
 
 Main:AddToggle("Tấn Công Siêu Nhanh (Máy yếu Có thể bị Lag nếu bật tính năng này)",function()
     
@@ -2270,7 +2280,7 @@ end)
 end
 end)
 
-Main:AddToggle("Tự Động Dùng Observation Hop",_G.AutoObservation_Hop,function(value)
+Main:AddToggle("Tự Động Dùng Observation Hop",true,function(value)
 _G.AutoObservation_Hop = value
 end)
 
@@ -2346,3 +2356,4 @@ end
 end
 end)
 end)
+end
