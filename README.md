@@ -2245,6 +2245,9 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) 
 SelectWeapona:Add(v.Name)
 end
 end)
+Main:AddButton("Team Hải Quân",true,function()
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines")
+end)
 
 Main:AddSeperator("Observation")
 
