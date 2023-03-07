@@ -2103,6 +2103,146 @@ local Misc = RenUi:AddTab("Tính năng khác","6034509993")
 local Vip = RenUi:AddTab("Chức Năng Vip","6026568198")
 --------------------------------------------------------------------
 Main:AddSeperator("Hãy Follow Kênh TikTok:Thanhtran2005isme để xem các Video về Hack Roblox mới:)")
+Main:AddSeperator("FastAttack and Settings")
+
+Main:AddToggle("Tấn Công Siêu Nhanh (Máy yếu Có thể bị Lag nếu bật tính năng này)",function()
+    
+local plr = game.Players.LocalPlayer
+
+local CbFw = debug.getupvalues(require(plr.PlayerScripts.CombatFramework))
+local CbFw2 = CbFw[2]
+
+function GetCurrentBlade()
+local p13 = CbFw2.activeController
+local ret = p13.blades[1]
+if not ret then return end
+while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+return ret
+end
+function AttackNoCD()
+local AC = CbFw2.activeController
+for i = 1, 1 do
+local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+plr.Character,
+{plr.Character.HumanoidRootPart},
+60
+)
+local cac = {}
+local hash = {}
+for k, v in pairs(bladehit) do
+if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+table.insert(cac, v.Parent.HumanoidRootPart)
+hash[v.Parent] = false
+end
+end
+bladehit = cac
+if #bladehit > 0 then
+local u8 = debug.getupvalue(AC.attack, 5)
+local u9 = debug.getupvalue(AC.attack, 6)
+local u7 = debug.getupvalue(AC.attack, 4)
+local u10 = debug.getupvalue(AC.attack, 7)
+local u12 = (u8 * 798405 + u7 * 727595) % u9
+local u13 = u7 * 798405
+(function()
+u12 = (u12 * u9 + u13) % 1099511627776
+u8 = math.floor(u12 / u9)
+u7 = u12 - u8 * u9
+end)()
+u10 = u10 + 1
+debug.setupvalue(AC.attack, 5, u8)
+debug.setupvalue(AC.attack, 6, u9)
+debug.setupvalue(AC.attack, 4, u7)
+debug.setupvalue(AC.attack, 7, u10)
+pcall(function()
+for k, v in pairs(AC.animator.anims.basic) do
+v:Play()
+end
+end)
+if plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+end
+end
+end
+end
+local cac
+if SuperFastMode then
+cac=task.wait
+else
+cac=wait
+end
+while cac() do
+AttackNoCD()
+end
+end)
+
+Main:AddToggle("Tấn Công Nhanh",true,function(Fast)
+
+_G.FastAttack = Fast
+
+end)
+local Module =  require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local CombatFramework = debug.getupvalues(Module)[2]
+local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
+
+spawn(function()
+while true do
+if _G.FastAttack then
+pcall(function()
+CameraShakerR:Stop()
+CombatFramework.activeController.attacking = false
+CombatFramework.activeController.timeToNextAttack = 0
+CombatFramework.activeController.increment = 3
+CombatFramework.activeController.hitboxMagnitude = 100
+CombatFramework.activeController.blocking = false
+CombatFramework.activeController.timeToNextBlock = 0
+CombatFramework.activeController.focusStart = 0
+CombatFramework.activeController.humanoid.AutoRotate = true
+end)
+end
+task.wait()
+end
+end)
+
+Main:AddToggle("Tự động đặt điểm hồi sinh",true,function(value)
+_G.AutoSetSpawn = value
+end)
+
+spawn(function()
+pcall(function()
+while wait() do
+if _G.AutoSetSpawn then
+if game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 then
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
+end
+end
+end
+end)
+end)
+
+Main:AddToggle("Bring Mob",true,function(value)
+_G.BringMonster = value
+end)
+
+WeaponList = {}
+
+for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+table.insert(WeaponList ,v.Name)
+end
+end
+
+local SelectWeapona = Main:AddDropdown("Select Weapon",WeaponList,function(value)
+_G.SelectWeapon = value
+end)
+
+Main:AddButton("Refresh Weapon",function()
+SelectWeapona:Clear()
+for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+SelectWeapona:Add(v.Name)
+end
+end)
 Main:AddSeperator("Observation")
 
 local ObservationRange = Main:AddLabel("")
